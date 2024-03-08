@@ -1,8 +1,8 @@
-import { useState } from 'react';
-import { Center, Tooltip, UnstyledButton, Stack, rem } from '@mantine/core';
+import { Center, Stack, Tooltip, UnstyledButton, rem } from '@mantine/core';
 import { IconDeviceDesktopAnalytics, IconNotes, IconUserX } from '@tabler/icons-react';
-import classes from '../styles/Navbar.module.css';
 import { useRouter } from 'next/router';
+import { useState } from 'react';
+import classes from '../styles/Navbar.module.css';
 
 interface NavbarLinkProps {
 	icon: typeof IconNotes;
@@ -46,7 +46,7 @@ export function Navbar() {
 	return (
 		<nav className={classes.navbar}>
 			<Center>
-				<img src="/public/logo.png"></img>
+				<img src="/logo.png"></img>
 			</Center>
 
 			<div className={classes.navbarMain}>

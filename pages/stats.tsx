@@ -1,7 +1,6 @@
-import { Anchor, List, Table, Group, Stack, LoadingOverlay } from '@mantine/core';
+import { Group, LoadingOverlay, Stack } from '@mantine/core';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import Link from 'next/link';
 import { Chart } from 'react-google-charts';
 import { calculateDietaryRestrictions, calculateSchools, calculateShirts } from '../utils/calculate';
 
@@ -11,7 +10,7 @@ export const data2 = [
 	['Eat', 2],
 	['Commute', 2],
 	['Watch TV', 2],
-	['Sleep', 7],
+	['Sleep', 7]
 ];
 
 const Stats = () => {
@@ -36,19 +35,40 @@ const Stats = () => {
 
 	return (
 		<>
-			<Group align="center" gap={50} ml={15} pt={20} mb={10}>
+			<Group align='center' gap={50} ml={15} pt={20} mb={10}>
 				<h2 style={{ margin: 0 }}>Application Stats</h2>
 			</Group>
 			{init && (
-				<Stack justify="center" align="center" h={'100vh'}>
+				<Stack justify='center' align='center' h={'100vh'}>
 					<LoadingOverlay visible={true}></LoadingOverlay>
 				</Stack>
 			)}
 			{!init && (
 				<>
-					<Chart chartType="PieChart" data={schoolData} options={{ title: 'Schools' }} width={'100%'} height={'400px'} />
-					<Chart chartType="PieChart" data={shirtData} options={{ title: 'Shirt Size' }} width={'100%'} height={'400px'} />
-					<Chart chartType="PieChart" data={dietData} options={{ title: 'Dietary Restrictions' }} width={'100%'} height={'400px'} />
+					<Chart
+						chartType='PieChart'
+						data={schoolData}
+						options={{ title: 'Schools' }}
+						width={'100%'}
+						height={'400px'}
+						style={{ maxWidth: '60em' }}
+					/>
+					<Chart
+						chartType='PieChart'
+						data={shirtData}
+						options={{ title: 'Shirt Size' }}
+						width={'100%'}
+						height={'400px'}
+						style={{ maxWidth: '60em' }}
+					/>
+					<Chart
+						chartType='PieChart'
+						data={dietData}
+						options={{ title: 'Dietary Restrictions' }}
+						width={'100%'}
+						height={'400px'}
+						style={{ maxWidth: '60em' }}
+					/>
 				</>
 			)}
 		</>

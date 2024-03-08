@@ -13,7 +13,7 @@ interface NavbarLinkProps {
 
 function NavbarLink({ icon: Icon, label, active, onClick }: NavbarLinkProps) {
 	return (
-		<Tooltip label={label} position="right" transitionProps={{ duration: 0 }}>
+		<Tooltip label={label} position='right' transitionProps={{ duration: 0 }}>
 			<UnstyledButton onClick={onClick} className={classes.link} data-active={active || undefined}>
 				<Icon style={{ width: rem(20), height: rem(20) }} stroke={1.5} />
 			</UnstyledButton>
@@ -24,7 +24,7 @@ function NavbarLink({ icon: Icon, label, active, onClick }: NavbarLinkProps) {
 const mockdata = [
 	{ icon: IconNotes, label: 'Applications', link: '/' },
 	{ icon: IconDeviceDesktopAnalytics, label: 'Statistics', link: '/stats' },
-	{ icon: IconUserX, label: 'Blacklist', link: '/blacklist' },
+	{ icon: IconUserX, label: 'Blacklist', link: '/blacklist' }
 ];
 
 export function Navbar() {
@@ -46,11 +46,11 @@ export function Navbar() {
 	return (
 		<nav className={classes.navbar}>
 			<Center>
-				<img src="/logo.png" height={30} width={30}></img>
+				<img src='/logo.png' height={30} width={30}></img>
 			</Center>
 
 			<div className={classes.navbarMain}>
-				<Stack justify="center" gap={0}>
+				<Stack justify='center' gap={0}>
 					{links}
 				</Stack>
 			</div>

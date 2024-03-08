@@ -29,11 +29,11 @@ const Index: NextPage = () => {
 	}, [isLoading, error, user, router]);
 
 	return (
-		<Stack>
+		<Stack gap={0}>
 			{admin && <Display />}
 			{(!user || (!admin && !init)) && <Text>You aren&apos;t allowed here &gt;:( leave</Text>}
 			{error && <Text>{error.message}</Text>}
-			{isLoading && <LoadingOverlay />}
+			{isLoading && <LoadingOverlay visible={true} />}
 		</Stack>
 	);
 };
@@ -41,4 +41,3 @@ const Index: NextPage = () => {
 export const getServerSideProps = withPageAuthRequired();
 
 export default Index;
-

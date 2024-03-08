@@ -1,6 +1,7 @@
-import { Anchor, List, Table } from '@mantine/core';
+import { Anchor, List, Table, Group } from '@mantine/core';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
 
 const Display: React.FC = () => {
 	const [data, setData] = useState<Application[]>([]);
@@ -18,6 +19,10 @@ const Display: React.FC = () => {
 
 	return (
 		<>
+			<Group align="center" gap={50} ml={15} mt={20} mb={10}>
+				<h2 style={{ margin: 0 }}>{data.length} applications</h2>
+				<Link href="/stats">View Stats</Link>
+			</Group>
 			<Table.ScrollContainer minWidth={1200}>
 				<Table stickyHeader highlightOnHover>
 					<Table.Thead>
@@ -73,4 +78,3 @@ const Display: React.FC = () => {
 };
 
 export default Display;
-

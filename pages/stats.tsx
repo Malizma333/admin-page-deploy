@@ -38,9 +38,8 @@ const Stats = () => {
 
 	return (
 		<>
-			<Group align="center" gap={50} ml={15} mt={20} mb={10}>
+			<Group align="center" gap={50} ml={15} pt={20} mb={10}>
 				<h2 style={{ margin: 0 }}>Application Stats</h2>
-				<Link href="/">View Applications</Link>
 			</Group>
 			{init && (
 				<Stack justify="center" align="center" h={'100vh'}>

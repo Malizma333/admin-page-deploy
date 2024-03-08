@@ -1,5 +1,6 @@
-import { Anchor, List, Table, TextInput } from '@mantine/core';
+import { Anchor, Group, List, Table, TextInput } from '@mantine/core';
 import axios from 'axios';
+import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { match } from '../lib/utils';
 
@@ -33,7 +34,11 @@ const Display: React.FC = () => {
 
 	return (
 		<>
-			<TextInput label="Search" value={search} onChange={(evt) => setSearch(evt.target.value)} />
+			<Group align="center" gap={50} ml={15} mt={20} mb={10}>
+				<TextInput label="Search" value={search} onChange={(evt) => setSearch(evt.target.value)} />
+				<h2 style={{ margin: 0 }}>{data.length} applications</h2>
+				<Link href="/stats">View Stats</Link>
+			</Group>
 			<Table.ScrollContainer minWidth={1200}>
 				<Table stickyHeader highlightOnHover>
 					<Table.Thead>

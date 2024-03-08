@@ -25,6 +25,7 @@ const Layout = ({ children }: { children: JSX.Element }) => {
 				})
 				.catch((err) => {
 					console.log(err);
+					setInit(false);
 				});
 		}
 	}, [isLoading, error, user, router]);
@@ -39,7 +40,7 @@ const Layout = ({ children }: { children: JSX.Element }) => {
 			)}
 			{(!user || (!admin && !init)) && <Text>You aren&apos;t allowed here &gt;:( leave</Text>}
 			{error && <Text>{error.message}</Text>}
-			{isLoading && <LoadingOverlay visible={true} />}
+			{(isLoading || init) && <LoadingOverlay visible={true} />}
 		</Stack>
 	);
 };

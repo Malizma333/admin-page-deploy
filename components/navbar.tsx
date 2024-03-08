@@ -46,7 +46,7 @@ export function Navbar() {
 	return (
 		<nav className={classes.navbar}>
 			<Center>
-				<img src="/public/logo.png"></img>
+				<img src="/logo.png" height={30} width={30}></img>
 			</Center>
 
 			<div className={classes.navbarMain}>

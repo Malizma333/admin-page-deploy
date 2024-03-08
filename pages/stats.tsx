@@ -41,7 +41,6 @@ const Stats = () => {
 			</Group>
 			{init && (
 				<Stack justify="center" align="center" h={'100vh'}>
-					<h3>Retrieving data...</h3>
 					<LoadingOverlay visible={true}></LoadingOverlay>
 				</Stack>
 			)}

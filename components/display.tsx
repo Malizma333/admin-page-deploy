@@ -1,9 +1,24 @@
-import { Anchor, List, Table } from '@mantine/core';
+import { Anchor, List, Table, TextInput } from '@mantine/core';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import { match } from '../lib/utils';
 
 const Display: React.FC = () => {
 	const [data, setData] = useState<Application[]>([]);
+	const [search, setSearch] = useState<string>('');
+	const [results, setResults] = useState<Application[]>([]);
+
+	useEffect(() => {
+		const timeout = setTimeout(() => {
+			if (search === '') {
+				setResults(data);
+			} else {
+				setResults(data.filter(({ firstName, lastName }) => match(search, firstName, lastName)));
+			}
+		}, 500);
+
+		return () => clearTimeout(timeout);
+	}, [search, data]);
 
 	useEffect(() => {
 		axios
@@ -18,6 +33,7 @@ const Display: React.FC = () => {
 
 	return (
 		<>
+			<TextInput label="Search" value={search} onChange={(evt) => setSearch(evt.target.value)} />
 			<Table.ScrollContainer minWidth={1200}>
 				<Table stickyHeader highlightOnHover>
 					<Table.Thead>
@@ -34,7 +50,7 @@ const Display: React.FC = () => {
 						</Table.Tr>
 					</Table.Thead>
 					<Table.Tbody>
-						{data.map((application) => (
+						{results.map((application) => (
 							<Table.Tr key={application._id.toString()}>
 								<Table.Td>
 									{application.firstName} {application.lastName}

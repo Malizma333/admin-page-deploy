@@ -5,6 +5,8 @@ import Head from 'next/head';
 
 import { UserProvider } from '@auth0/nextjs-auth0/client';
 import '@mantine/core/styles.css';
+import { Navbar } from '../components/navbar';
+import Layout from '../components/layout';
 
 export default function App(props: AppProps) {
 	const { Component, pageProps } = props;
@@ -19,13 +21,12 @@ export default function App(props: AppProps) {
 
 			<MantineProvider>
 				<Notifications position="top-right" />
-				{/* <Layout> */}
 				<UserProvider>
-					<Component {...pageProps} />
+					<Layout>
+						<Component {...pageProps} />
+					</Layout>
 				</UserProvider>
-				{/* </Layout> */}
 			</MantineProvider>
 		</>
 	);
 }
-

@@ -15,7 +15,6 @@ export const data2 = [
 ];
 
 const Stats = () => {
-	const [data, setData] = useState<Application[]>([]);
 	const [init, setInit] = useState(true);
 	const [schoolData, setSchoolData] = useState<[string, string | number][]>([]);
 	const [shirtData, setShirtData] = useState<[string, string | number][]>([]);
@@ -25,7 +24,6 @@ const Stats = () => {
 		axios
 			.get('/api/data')
 			.then((res) => {
-				setData(res.data);
 				setSchoolData(calculateSchools(res.data));
 				setShirtData(calculateShirts(res.data));
 				setDietData(calculateDietaryRestrictions(res.data));

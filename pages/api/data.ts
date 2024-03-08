@@ -18,4 +18,3 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
 		res.status(405).send('Must use GET');
 	}
 };
-

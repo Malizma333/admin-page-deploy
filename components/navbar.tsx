@@ -1,10 +1,6 @@
 import { useState } from 'react';
 import { Center, Tooltip, UnstyledButton, Stack, rem } from '@mantine/core';
-import {
-	IconDeviceDesktopAnalytics,
-	IconNotes,
-	IconUserX,
-} from '@tabler/icons-react';
+import { IconDeviceDesktopAnalytics, IconNotes, IconUserX } from '@tabler/icons-react';
 import classes from '../styles/Navbar.module.css';
 import { useRouter } from 'next/router';
 
@@ -49,7 +45,9 @@ export function Navbar() {
 
 	return (
 		<nav className={classes.navbar}>
-			<Center>{/* <MantineLogo type="mark" inverted size={30} /> */}</Center>
+			<Center>
+				<img src="/public/logo.png"></img>
+			</Center>
 
 			<div className={classes.navbarMain}>
 				<Stack justify="center" gap={0}>

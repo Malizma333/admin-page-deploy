@@ -24,4 +24,3 @@ const Admin = async (req: NextApiRequest, res: NextApiResponse) => {
 };
 
 export default Admin;
-

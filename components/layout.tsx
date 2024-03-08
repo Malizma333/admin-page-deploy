@@ -6,7 +6,7 @@ import axios from 'axios';
 import { useRouter } from 'next/router';
 import { NextPage } from 'next/types';
 import { useEffect, useState } from 'react';
-import Display from '../components/display';
+import Display from './display';
 
 const Layout = ({ children }: { children: JSX.Element }) => {
 	const { user, error, isLoading } = useUser();

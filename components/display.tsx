@@ -123,9 +123,9 @@ const Display: React.FC = () => {
 										setOpen(true);
 										setReason('Personal ban');
 										setName(`${application.firstName} ${application.lastName}`);
-										setPhoneNumber(application.phoneNumber);
-										setLevelOfStudy(application.levelOfStudy);
-										setSchool(application.school);
+										setPhoneNumber('');
+										setLevelOfStudy('');
+										setSchool('');
 									}}>
 									<IconHammer />
 								</Button>

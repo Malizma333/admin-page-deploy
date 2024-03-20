@@ -4,6 +4,10 @@ interface Application extends ApplicationData {
 	_id: import('mongodb').ObjectId;
 }
 
+interface BlacklistFilter extends BlacklistFilterData {
+	_id: import('mongodb').ObjectId;
+}
+
 interface ApplicationData {
 	firstName: string;
 	lastName: string;
@@ -26,5 +30,16 @@ interface ApplicationData {
 	featured: boolean;
 	projectLink: string | null;
 	projectName: string | null;
+}
+
+interface BlacklistFilterData {
+	reason: string | null;
+	fields: {
+		name: string | null;
+		email: string | null;
+		phoneNumber: string | null;
+		levelOfStudy: string | null;
+		school: string | null;
+	};
 }
 

@@ -1,5 +1,6 @@
-export function match(query: string, ...fields: string[]): boolean {
+export function match(query: string, ...fields: (string | undefined)[]): boolean {
 	return fields
+		.filter((value): value is string => value !== undefined)
 		.map((value) => value.toLowerCase())
 		.some((value) => {
 			const q = query.toLowerCase();

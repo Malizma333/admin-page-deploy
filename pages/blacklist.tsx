@@ -1,9 +1,8 @@
-import { Anchor, Group, List, Table, TextInput, rem, Stack, LoadingOverlay } from '@mantine/core';
+import { Anchor, Group, List, LoadingOverlay, Stack, Table, TextInput, rem } from '@mantine/core';
+import { IconSearch } from '@tabler/icons-react';
 import axios from 'axios';
-import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { match } from '../lib/utils';
-import { IconSearch } from '@tabler/icons-react';
 
 const Blacklist = () => {
 	const [data, setData] = useState<Application[]>([]);
@@ -24,18 +23,20 @@ const Blacklist = () => {
 	}, [search, data]);
 
 	useEffect(() => {
-		axios
-			.get('/api/data')
-			.then((res) => {
-				const applications: Application[] = res.data;
-				const newData = applications.filter(
-					(application) =>
-						Number(application.age) < 18 ||
-						application.levelOfStudy === 'Secondary/High School' ||
-						application.levelOfStudy === 'Less than Secondary/High School' ||
-						application.school === 'None' ||
-						(application.firstName === 'Matt' && application.lastName === 'Toal')
+		Promise.all([axios.get<Application[]>('/api/data').then((res) => res.data), axios.get<BlacklistFilter[]>('/api/blacklist').then((res) => res.data)])
+			.then(([applications, blacklist]) => {
+				const newData = applications.filter((application) =>
+					blacklist.some((filter) => {
+						return (
+							(filter.fields.name !== null && match(filter.fields.name, application.firstName, application.lastName)) ||
+							(filter.fields.email !== null && match(filter.fields.email, application.email)) ||
+							(filter.fields.phoneNumber !== null && match(filter.fields.phoneNumber, application.phoneNumber)) ||
+							(filter.fields.levelOfStudy !== null && match(filter.fields.levelOfStudy, application.levelOfStudy)) ||
+							(filter.fields.school !== null && match(filter.fields.school, application.school))
+						);
+					})
 				);
+
 				setData(newData);
 				setInit(false);
 			})
@@ -114,3 +115,4 @@ const Blacklist = () => {
 };
 
 export default Blacklist;
+

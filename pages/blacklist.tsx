@@ -28,7 +28,7 @@ const Blacklist = () => {
 				const newData = applications.filter((application) =>
 					blacklist.some((filter) => {
 						return (
-							(filter.fields.name !== null && match(filter.fields.name, application.firstName, application.lastName)) ||
+							(filter.fields.name !== null && filter.fields.name === (application.firstName + ' ' + application.lastName)) ||
 							(filter.fields.email !== null && match(filter.fields.email, application.email)) ||
 							(filter.fields.phoneNumber !== null && match(filter.fields.phoneNumber, application.phoneNumber)) ||
 							(filter.fields.levelOfStudy !== null && match(filter.fields.levelOfStudy, application.levelOfStudy)) ||

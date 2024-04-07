@@ -1,10 +1,11 @@
+import { IconEdit } from '@tabler/icons-react';
 import { Anchor, Button, Group, List, LoadingOverlay, Modal, Stack, Table, TextInput, rem } from '@mantine/core';
 import { IconHammer, IconPlus, IconSearch } from '@tabler/icons-react';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { match } from '../lib/utils';
 
-const Display: React.FC = () => {
+const Edit = () => {
 	const [data, setData] = useState<Application[]>([]);
 	const [search, setSearch] = useState<string>('');
 	const [results, setResults] = useState<Application[]>([]);
@@ -53,6 +54,28 @@ const Display: React.FC = () => {
 			});
 	}, []);
 
+	const projectNameHandler = (projectName: string, firstName: string, lastName: string) => {
+		const i = data.findIndex((app) => app.firstName == firstName && app.lastName == lastName);
+		data[i].projectName = projectName;
+		setData([...data]);
+        axios.post('/api/edit', {
+            projectName,
+            firstName,
+            lastName
+        })
+	};
+
+	const projectLinkHandler = (projectLink: string, firstName: string, lastName: string) => {
+		const i = data.findIndex((app) => app.firstName == firstName && app.lastName == lastName);
+        data[i].projectLink = projectLink;
+		setData([...data]);
+        axios.post('/api/edit', {
+            projectLink,
+            firstName,
+            lastName
+        })
+	};
+
 	return (
 		<>
 			{init && (
@@ -75,14 +98,8 @@ const Display: React.FC = () => {
 					<Table.Tr>
 						<Table.Th>Name</Table.Th>
 						<Table.Th>Email</Table.Th>
-						<Table.Th>Age</Table.Th>
-						<Table.Th>Phone Number</Table.Th>
-						<Table.Th>School</Table.Th>
-						<Table.Th>Graduation</Table.Th>
-						<Table.Th>Shirt Size</Table.Th>
-						<Table.Th>Resume</Table.Th>
-						<Table.Th>Dietary Restrictions</Table.Th>
-						<Table.Th></Table.Th>
+						<Table.Th>Project Name</Table.Th>
+						<Table.Th>Project Link</Table.Th>
 					</Table.Tr>
 				</Table.Thead>
 				<Table.Tbody>
@@ -92,44 +109,17 @@ const Display: React.FC = () => {
 								{application.firstName} {application.lastName}
 							</Table.Td>
 							<Table.Td>{application.email}</Table.Td>
-							<Table.Td>{application.age}</Table.Td>
-							<Table.Td>{application.phoneNumber}</Table.Td>
-							<Table.Td>{application.school}</Table.Td>
 							<Table.Td>
-								{application.graduationMonth} {application.graduationYear}
-							</Table.Td>
-							<Table.Td>{application.shirtSize}</Table.Td>
-							<Table.Td>
-								{application.resume ? (
-									<Anchor href={application.resume} target="_blank" rel="noreferrer noopener">
-										View
-									</Anchor>
-								) : (
-									'N/A'
-								)}
+								<input
+									value={application.projectName ?? ''}
+									onChange={(e) => projectNameHandler(e.target.value, application.firstName, application.lastName)}
+								></input>
 							</Table.Td>
 							<Table.Td>
-								<List>
-									{application.dietRestrictions.map((restriction, i) => (
-										<List.Item key={i}>{restriction}</List.Item>
-									))}
-								</List>
-							</Table.Td>
-							<Table.Td>
-								<Button
-									color="red"
-									px={5}
-									onClick={() => {
-										setOpen(true);
-										setReason('Personal ban');
-										setName(`${application.firstName} ${application.lastName}`);
-										setPhoneNumber('');
-										setLevelOfStudy('');
-										setSchool('');
-									}}
-								>
-									<IconHammer />
-								</Button>
+								<input
+									value={application.projectLink ?? ''}
+									onChange={(e) => projectLinkHandler(e.target.value, application.firstName, application.lastName)}
+								></input>
 							</Table.Td>
 						</Table.Tr>
 					))}
@@ -199,4 +189,4 @@ const Display: React.FC = () => {
 	);
 };
 
-export default Display;
+export default Edit;

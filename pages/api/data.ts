@@ -1,34 +1,44 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import axios from "axios";
+import clientPromise from "../../lib/mongodb";
 
 export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
     if (req.method === "GET") {
         try {
-            const accessToken = req.headers.authorization?.split(" ")[1];
+            const client = await clientPromise;
+            const db = client.db("main");
 
-            if (!accessToken) {
-                res.status(401).json({ error: "No authorization token provided" });
-                return;
-            }
+            const data = await db.collection("applications").find().toArray();
 
-            const response = await axios.get("https://api.mlh.com/v4/users/me?expand[]=education&expand[]=professional_experience&expand[]=address", {
-                headers: {
-                    Authorization: `Bearer ${accessToken}`,
-                },
-            });
+            const applications = data.map((user) => ({
+                _id: user._id,
+                firstName: user.first_name,
+                lastName: user.last_name,
+                email: user.email,
+                age: user.profile?.age?.toString() || "",
+                phoneNumber: user.phone_number || "",
+                country: user.profile?.country_of_residence || "",
+                school: user.education?.[0]?.school_name || "",
+                levelOfStudy: user.education?.[0]?.school_type || "",
+                graduationMonth: user.education?.[0]?.end_date ? new Date(user.education[0].end_date * 1000).toLocaleString("default", { month: "long" }) : "",
+                graduationYear: user.education?.[0]?.end_date ? new Date(user.education[0].end_date * 1000).getFullYear().toString() : "",
+                shirtSize: (user.profile?.tshirt_size as Application["shirtSize"]) || "M",
+                dietRestrictions: user.profile?.dietary_preference ? [user.profile.dietary_preference] : [],
+                resume: null,
+                codeOfConductAgreement: true,
+                dataAgreement: true,
+                mlhAgreement: true,
+                category: null,
+                featured: false,
+                projectLink: null,
+                projectName: null,
+            }));
 
-            res.status(200).json(response.data);
-        } catch (error) {
-            if (axios.isAxiosError(error)) {
-                res.status(error.response?.status || 500).json({
-                    error: error.response?.data || "An error occurred while fetching MLH data",
-                });
-            } else {
-                console.error(error);
-                res.status(500).json({ error: "Internal server error" });
-            }
+            res.status(200).json(applications);
+        } catch (e) {
+            console.error(e);
+            res.status(500).send("An error occurred");
         }
     } else {
-        res.status(405).json({ error: "Method not allowed" });
+        res.status(405).send("Must use GET");
     }
 };

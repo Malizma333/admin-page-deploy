@@ -7,7 +7,7 @@ export default async (req: NextApiRequest, resp: NextApiResponse): Promise<void>
 		const code = req.query.code;
 
 		if (!code || Array.isArray(code)) {
-			resp.status(303).setHeader('Location', 'https://pickhacks.io/login-error?err=bad_code');
+			resp.status(303).setHeader('Location', 'https://pickhacks.io?err=bad_code');
 		} else {
 			const client = await clientPromise;
 			const applications = client.db('main').collection('applications');
@@ -39,7 +39,7 @@ export default async (req: NextApiRequest, resp: NextApiResponse): Promise<void>
 								console.error(err);
 							}
 
-							resp.status(500).send('User Error');
+							resp.status(303).setHeader('Location', 'https://pickhacks.io?err=user_error').end();
 						});
 				})
 				.catch((err) => {
@@ -51,7 +51,7 @@ export default async (req: NextApiRequest, resp: NextApiResponse): Promise<void>
 						console.error(err);
 					}
 
-					resp.status(500).send('Token Error');
+					resp.status(303).setHeader('Location', 'https://pickhacks.io?message=token_error').end();
 				});
 		}
 	} else {

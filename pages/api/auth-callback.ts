@@ -51,7 +51,7 @@ export default async (req: NextApiRequest, resp: NextApiResponse): Promise<void>
 						console.error(err);
 					}
 
-					resp.status(303).setHeader('Location', 'https://pickhacks.io?message=token_error').end();
+					resp.status(303).setHeader('Location', 'https://pickhacks.io?err=token_error').end();
 				});
 		}
 	} else {

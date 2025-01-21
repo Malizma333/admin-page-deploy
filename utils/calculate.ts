@@ -1,6 +1,7 @@
 const schoolList = [
 	'College of the Ozarks',
-	'Missouri S&T',
+	'Missouri University of Science and Technology',
+	'St. Louis Community College',
 	'Missouri State University',
 	'Mizzou',
 	'Southeast Missouri State University',
@@ -9,7 +10,7 @@ const schoolList = [
 	'University of Illinois Urbana-Champaign',
 	'University of Missouri–St. Louis',
 	'Washington University in St. Louis',
-	'None',
+	'None'
 ];
 
 export const calculateSchools = (data: Application[]) => {
@@ -53,21 +54,19 @@ export const calculateShirts = (data: Application[]) => {
 };
 
 export const calculateDietaryRestrictions = (data: Application[]) => {
-	const dict: { [id: string]: any } = {None: 0};
+	const dict: { [id: string]: any } = { None: 0 };
 	data.forEach((application) => {
-        if (application.dietRestrictions.length) {
-            application.dietRestrictions.forEach((diet) => {
-                if (dict[diet] !== undefined) {
-                    dict[diet]++;
-                }
-                else {
-                    dict[diet] = 1;
-                }
-            })
-        }
-        else {
-            dict["None"]++;
-        }
+		if (application.dietRestrictions.length) {
+			application.dietRestrictions.forEach((diet) => {
+				if (dict[diet] !== undefined) {
+					dict[diet]++;
+				} else {
+					dict[diet] = 1;
+				}
+			});
+		} else {
+			dict['None']++;
+		}
 	});
 	const res: [string, string | number][] = [];
 	Object.keys(dict).forEach((key) => {
@@ -77,3 +76,4 @@ export const calculateDietaryRestrictions = (data: Application[]) => {
 	res.unshift(['DietaryRestrictions', 'Count']);
 	return res;
 };
+

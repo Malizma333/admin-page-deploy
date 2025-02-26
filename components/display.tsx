@@ -1,4 +1,4 @@
-import { Anchor, Button, Group, List, LoadingOverlay, Modal, Stack, Table, TextInput, rem } from '@mantine/core';
+import { Anchor, Button, Checkbox, Group, List, LoadingOverlay, Modal, Stack, Table, TextInput, rem } from '@mantine/core';
 import { IconHammer, IconPlus, IconSearch } from '@tabler/icons-react';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
@@ -116,6 +116,14 @@ const Display: React.FC = () => {
 								</List>
 							</Table.Td>
 							<Table.Td>
+								<Checkbox
+									checked={application.checkedIn}
+									onChange={() =>
+										axios
+											.post('/api/check-in', { firstName: application.firstName, lastName: application.lastName })
+											.then((res) => setData((apps) => apps.map((a) => (a === application ? res.data : a))))
+									}
+								/>
 								<Button
 									color="red"
 									px={5}
@@ -126,8 +134,7 @@ const Display: React.FC = () => {
 										setPhoneNumber('');
 										setLevelOfStudy('');
 										setSchool('');
-									}}
-								>
+									}}>
 									<IconHammer />
 								</Button>
 							</Table.Td>
@@ -144,8 +151,7 @@ const Display: React.FC = () => {
 						setPhoneNumber('');
 						setLevelOfStudy('');
 						setSchool('');
-					}}
-				>
+					}}>
 					<TextInput label="Reason" value={reason} onChange={(evt) => setReason(evt.target.value)} />
 					<TextInput label="Name" value={name} onChange={(evt) => setName(evt.target.value)} />
 					<TextInput label="Email" value={email} onChange={(evt) => setEmail(evt.target.value)} />
@@ -163,8 +169,8 @@ const Display: React.FC = () => {
 										email: email === '' ? null : email,
 										phoneNumber: phoneNumber === '' ? null : phoneNumber,
 										levelOfStudy: levelOfStudy === '' ? null : levelOfStudy,
-										school: school === '' ? null : school,
-									},
+										school: school === '' ? null : school
+									}
 								})
 								.then((res) => {
 									const filter = res.data;
@@ -189,8 +195,7 @@ const Display: React.FC = () => {
 									setLevelOfStudy('');
 									setSchool('');
 								})
-						}
-					>
+						}>
 						Add
 					</Button>
 				</Modal>
@@ -200,3 +205,4 @@ const Display: React.FC = () => {
 };
 
 export default Display;
+

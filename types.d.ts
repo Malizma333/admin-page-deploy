@@ -30,6 +30,7 @@ interface ApplicationData {
 	featured: boolean;
 	projectLink: string | null;
 	projectName: string | null;
+	checkedIn: boolean;
 }
 
 interface BlacklistFilterData {

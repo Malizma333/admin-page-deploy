@@ -7,15 +7,17 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
 			const client = await clientPromise;
 			const db = client.db('main');
 
-			const application = await db.collection<ApplicationData>('applications').findOne({ firstName: req.body.firstName, lastName: req.body.lastName });
+			const application = await db
+				.collection<MyMLHUser & { checkedIn: boolean }>('applications')
+				.findOne({ first_name: req.body.firstName, last_name: req.body.lastName });
 
 			if (!application) {
 				return res.status(404).send('Application not found');
 			}
 
 			await db
-				.collection('applications')
-				.updateOne({ firstName: req.body.firstName, lastName: req.body.lastName }, { $set: { checkedIn: !application.checkedIn } });
+				.collection<MyMLHUser & { checkedIn: boolean }>('applications')
+				.updateOne({ first_name: req.body.firstName, last_name: req.body.lastName }, { $set: { checkedIn: !application.checkedIn } });
 
 			application.checkedIn = !application.checkedIn;
 			res.status(200).send(application);
@@ -27,3 +29,4 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
 		res.status(405).send('Must use POST');
 	}
 };
+
